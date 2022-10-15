@@ -1,13 +1,20 @@
 package com.app.findcarbackend.domain;
 
-import lombok.*;
+import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity(name = "CLIENTS")
 public class Client {
+
+    private List<Rent> rents = new ArrayList<>();
 
     @NotNull
     @Id
@@ -36,11 +43,17 @@ public class Client {
     @Column(name = "LOGIN_STATUS")
     private LoginStatus loginStatus;
 
-    @ManyToMany
-    @JoinColumn(name = 'CAR_ID')
+    @OneToOne
+    @JoinColumn(name = "CAR_ID")
     private Car car;
 
-    @OneToMany
-    @JoinColumn(name = 'RENT_ID')
-    private Rent rent;
+    @OneToMany(
+            targetEntity = Rent.class,
+            mappedBy = "client",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Rent> getRents() {
+        return rents;
+    }
 }

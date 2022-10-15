@@ -1,18 +1,24 @@
 package com.app.findcarbackend.domain;
 
-import com.sun.istack.NotNull;
-import lombok.*;
+import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity(name = "RENTS")
 public class Rent {
+
+    private List<Car> cars = new ArrayList<>();
 
     @NotNull
     @Id
@@ -36,6 +42,16 @@ public class Rent {
     private boolean isPaid;
 
     @ManyToOne
-    @JoinColumn(name = 'CLIENT_ID')
+    @JoinColumn(name = "CLIENT_ID")
     private Client client;
+
+    @OneToMany(
+            targetEntity = Car.class,
+            mappedBy = "rent",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<Car> getCars() {
+        return cars;
+    }
 }
