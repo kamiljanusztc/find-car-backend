@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,12 +38,4 @@ public class Car {
 
     @Column(name = "CAR_STATUS")
     private CarStatus carStatus;
-
-    @OneToOne
-    @JoinColumn(name = "CLIENT_ID")
-    private Client client;
-
-    @ManyToOne
-    @JoinColumn(name = "RENT_ID")
-    private Rent rent;
 }

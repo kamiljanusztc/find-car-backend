@@ -18,8 +18,6 @@ import java.util.List;
 @Entity(name = "RENTS")
 public class Rent {
 
-    private List<Car> cars = new ArrayList<>();
-
     @NotNull
     @Id
     @GeneratedValue
@@ -45,13 +43,7 @@ public class Rent {
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
-    @OneToMany(
-            targetEntity = Car.class,
-            mappedBy = "rent",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private List<Car> getCars() {
-        return cars;
-    }
+    @ManyToOne
+    @JoinColumn(name = "CAR_ID")
+    private Car car;
 }
