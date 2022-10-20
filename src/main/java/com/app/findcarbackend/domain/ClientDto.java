@@ -6,14 +6,16 @@ public class ClientDto {
     private String surname;
     private String login;
     private String email;
+    private String phone;
     private LoginStatus loginStatus;
 
-    public ClientDto(long id, String name, String surname, String login, String email, LoginStatus loginStatus) {
+    public ClientDto(long id, String name, String surname, String login, String email, String phone, LoginStatus loginStatus) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.email = email;
+        this.phone = phone;
         this.loginStatus = loginStatus;
     }
 
@@ -35,6 +37,10 @@ public class ClientDto {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public LoginStatus getLoginStatus() {
