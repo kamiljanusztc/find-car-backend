@@ -18,8 +18,8 @@ public class CarController {
 
     @GetMapping(value = "{carId}")
     public ResponseEntity<Optional> getCarById(@PathVariable Long carId) {
-        Car rent = new Car();
-        rent.setId(carId);
+        Car car = new Car();
+        car.setId(carId);
 
         return ResponseEntity.ok(carService.getCarById(carId));
     }
