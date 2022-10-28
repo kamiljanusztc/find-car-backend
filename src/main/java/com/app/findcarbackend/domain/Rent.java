@@ -16,7 +16,7 @@ public class Rent {
 
     @NotNull
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "RENT_ID", unique = true)
     private Long id;
 
@@ -26,6 +26,7 @@ public class Rent {
     @Column(name = "DATE_END")
     private LocalDate dateEnd;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "RENT_STATUS")
     private RentStatus rentStatus;
 

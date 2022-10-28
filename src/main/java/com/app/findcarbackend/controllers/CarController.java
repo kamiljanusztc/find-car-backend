@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/cars")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class CarController {
 
     private final CarService carService;
@@ -30,8 +31,8 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<Car> addCar() {
-        return ResponseEntity.ok(carService.addCar(new Car()));
+    public ResponseEntity<Car> addCar(@RequestBody Car car) {
+        return ResponseEntity.ok(carService.addCar(car));
     }
 
     @PutMapping

@@ -25,7 +25,7 @@ public class CarService {
 
     public Car addCar(Car car) {
         car.setModel("Audi");
-        car.setYear(2022);
+        car.setProductionYear(2022);
         car.setGearBox("Automatic");
         car.setFuelType("Petrol");
         car.setEngine(2.0);

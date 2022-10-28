@@ -2,11 +2,12 @@ package com.app.findcarbackend.domain;
 
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -15,15 +16,15 @@ public class Car {
 
     @NotNull
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "CAR_ID", unique = true)
     private Long id;
 
     @Column(name = "MODEL")
     private String model;
 
-    @Column(name = "YEAR")
-    private Integer year;
+    @Column(name = "PRODUCTION_YEAR")
+    private Integer productionYear;
 
     @Column(name = "GEARBOX")
     private String gearBox;
@@ -37,6 +38,7 @@ public class Car {
     @Column(name = "CAR_POWER")
     private String carPower;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "CAR_STATUS")
     private CarStatus carStatus;
 }
