@@ -26,7 +26,6 @@ public class RentService {
         rent.setCost(600.00);
         rent.setPaid(false);
         rent.setClient(new Client(1L, "John", "Doe", "j_doe", "j.doe@doe.com", "000000000", LoginStatus.LOGGED));
-//        rent.setCar(new Car(2L, "BMW", 2021, "Automatic", "Diesel", "150 ps", CarStatus.RENTED));
         rent.setCar(new Car());
         return rentRepository.save(rent);
     }
@@ -36,7 +35,8 @@ public class RentService {
         return rentRepository.save(rent);
     }
 
-    public void deleteRent(Long rentId) {
+    public boolean deleteRent(Long rentId) {
         rentRepository.deleteById(rentId);
+        return true;
     }
 }

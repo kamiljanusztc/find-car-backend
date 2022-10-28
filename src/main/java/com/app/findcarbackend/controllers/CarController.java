@@ -30,13 +30,18 @@ public class CarController {
         return ResponseEntity.ok(carService.getAllCars());
     }
 
-    @PostMapping
+    @PostMapping("/newCar")
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
         return ResponseEntity.ok(carService.addCar(car));
     }
 
-    @PutMapping
-    public ResponseEntity<Car> updateCar() {
-        return ResponseEntity.ok(carService.updateCar(new Car()));
+    @PutMapping("/updateCar")
+    public ResponseEntity<Car> updateCar(Car car) {
+        return ResponseEntity.ok(carService.updateCar(car));
+    }
+
+    @DeleteMapping(value = "/remove/{carId}")
+    public ResponseEntity<Boolean> deleteCar(@PathVariable Long carId) {
+        return ResponseEntity.ok(carService.deleteCar(carId));
     }
 }

@@ -11,6 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/rents")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class RentController {
 
     private final RentService rentService;
@@ -28,13 +29,18 @@ public class RentController {
         return ResponseEntity.ok(rentService.getAllRents());
     }
 
-    @PostMapping
-    public ResponseEntity<Rent> createRent() {
-        return ResponseEntity.ok(rentService.createRent(new Rent()));
+    @PostMapping("/newRent")
+    public ResponseEntity<Rent> createRent(@RequestBody Rent rent) {
+        return ResponseEntity.ok(rentService.createRent(rent));
     }
 
-    @PutMapping
-    public ResponseEntity<Rent> updateRent() {
-        return ResponseEntity.ok(rentService.updateRent(new Rent()));
+    @PutMapping("/updateRent")
+    public ResponseEntity<Rent> updateRent(Rent rent) {
+        return ResponseEntity.ok(rentService.updateRent(rent));
+    }
+
+    @DeleteMapping(value = "/remove/{rentId}")
+    public ResponseEntity<Boolean> deleteRent(@PathVariable Long rentId) {
+        return ResponseEntity.ok(rentService.deleteRent(rentId));
     }
 }
