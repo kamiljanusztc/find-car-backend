@@ -1,13 +1,14 @@
 package com.app.findcarbackend.domain;
 
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

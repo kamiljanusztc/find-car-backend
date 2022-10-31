@@ -12,7 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RentService {
 
-    RentRepository rentRepository;
+    private final RentRepository rentRepository;
 
     public Optional<Rent> getRentById(final Long rentId) { return rentRepository.findById(rentId); }
 
@@ -25,7 +25,7 @@ public class RentService {
         rent.setDateEnd(LocalDate.of(2022, 1, 15));
         rent.setCost(600.00);
         rent.setPaid(false);
-        rent.setClient(new Client(1L, "John", "Doe", "j_doe", "j.doe@doe.com", "000000000", LoginStatus.LOGGED));
+        rent.setClient(new Client());
         rent.setCar(new Car());
         return rentRepository.save(rent);
     }

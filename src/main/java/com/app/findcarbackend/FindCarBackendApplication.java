@@ -4,6 +4,7 @@ import com.app.findcarbackend.domain.*;
 import com.app.findcarbackend.repositories.CarRepository;
 import com.app.findcarbackend.repositories.ClientRepository;
 import com.app.findcarbackend.repositories.RentRepository;
+import com.app.findcarbackend.services.CarRetriever;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,6 +39,8 @@ public class FindCarBackendApplication {
                 carRepository.save(car);
             }
             carRepository.findAll().forEach(System.out::println);
+
+//            System.out.println(carRetriever.getCarsFromApi());
 
             for (int i = 0; i < 10; i++) {
                 Rent rent = new Rent((long) i, LocalDate.of(2022, 05, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00 + i, true, client1[0], car1[0]);
