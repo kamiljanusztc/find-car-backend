@@ -4,6 +4,7 @@ import com.app.findcarbackend.domain.*;
 import com.app.findcarbackend.repositories.CarRepository;
 import com.app.findcarbackend.repositories.ClientRepository;
 import com.app.findcarbackend.repositories.RentRepository;
+import com.app.findcarbackend.services.CarFactory;
 import com.app.findcarbackend.services.CarRetriever;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.stream.Stream;
 
 @SpringBootApplication
@@ -21,7 +23,7 @@ public class FindCarBackendApplication {
     }
 
     @Bean
-    CommandLineRunner init(ClientRepository clientRepository, CarRepository carRepository, RentRepository rentRepository) {
+    CommandLineRunner init(ClientRepository clientRepository, CarRepository carRepository, RentRepository rentRepository, CarRetriever carRetriever, CarFactory carFactory) {
         final Client[] client1 = new Client[1];
         final Car[] car1 = new Car[1];
 
@@ -33,14 +35,17 @@ public class FindCarBackendApplication {
             }
             clientRepository.findAll().forEach(System.out::println);
 
-            for (int i = 0; i < 10; i++) {
-                Car car = new Car((long) i, "Model_" + i, 2022, "Automatic", "Petrol", 2.0, "300 ps", CarStatus.FREE);
+
+            ApiCarResponseObject apiCars = carRetriever.getCarsFromApi();
+            List<ApiCar> data = apiCars.getData();
+            for (int i = 0; i < data.size(); i++) {
+                ApiCar apiCar = data.get(i);
+                Car car = carFactory.getCar(apiCar.getName(), apiCar.getId());
                 car1[0] = car;
                 carRepository.save(car);
-            }
-            carRepository.findAll().forEach(System.out::println);
+                carRepository.findAll().forEach(System.out::println);
 
-//            System.out.println(carRetriever.getCarsFromApi());
+            }
 
             for (int i = 0; i < 10; i++) {
                 Rent rent = new Rent((long) i, LocalDate.of(2022, 05, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00 + i, true, client1[0], car1[0]);
