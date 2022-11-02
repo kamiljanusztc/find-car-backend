@@ -6,15 +6,17 @@ public class CarDto {
     private Integer year;
     private String gearBox;
     private String fuelType;
+    private Double engine;
     private String carPower;
     private CarStatus carStatus;
 
-    public CarDto(Long id, String model, Integer year, String gearBox, String fuelType, String carPower, CarStatus carStatus) {
+    public CarDto(Long id, String model, Integer year, String gearBox, String fuelType, Double engine, String carPower, CarStatus carStatus) {
         this.id = id;
         this.model = model;
         this.year = year;
         this.gearBox = gearBox;
         this.fuelType = fuelType;
+        this.engine = engine;
         this.carPower = carPower;
         this.carStatus = carStatus;
     }
@@ -37,6 +39,10 @@ public class CarDto {
 
     public String getFuelType() {
         return fuelType;
+    }
+
+    public Double getEngine() {
+        return engine;
     }
 
     public String getCarPower() {
