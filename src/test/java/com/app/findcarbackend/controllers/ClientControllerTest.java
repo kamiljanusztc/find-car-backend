@@ -1,7 +1,6 @@
 package com.app.findcarbackend.controllers;
 
-import com.app.findcarbackend.domain.Client;
-import com.app.findcarbackend.domain.LoginStatus;
+import com.app.findcarbackend.domain.*;
 import com.app.findcarbackend.services.ClientService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -18,6 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -80,5 +80,15 @@ class ClientControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.login", Matchers.is("j_do")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.phone", Matchers.is("000000000")));
+    }
+
+    @Test
+    void shouldDeleteClientById() {
+        List<Client> clientList = List.of(new Client(1L, "John", "Doe", "j_do", "j.doe@doe.com", "000000000", LoginStatus.LOGGED));
+        when(clientService.getAllClients()).thenReturn(clientList);
+
+        clientService.deleteClient(1L);
+
+        verify(clientService).deleteClient(1L);
     }
 }

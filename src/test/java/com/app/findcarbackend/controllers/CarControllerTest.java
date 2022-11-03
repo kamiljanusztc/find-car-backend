@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -31,6 +32,7 @@ class CarControllerTest {
 
     @MockBean
     CarService carService;
+
 
     @Test
     void shouldGetEmptyListOfCars() throws Exception {
@@ -81,5 +83,15 @@ class CarControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gearBox", Matchers.is("Manual")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.engine", Matchers.is(4.4)));
+    }
+
+    @Test
+    void shouldDeleteCarById() {
+        List<Car> carList = List.of(new Car(1L, "Audi", 2022, "Manual", "Diesel", 4.4, "220 ps", CarStatus.FREE));
+        when(carService.getAllCars()).thenReturn(carList);
+
+        carService.deleteCar(1L);
+
+        verify(carService).deleteCar(1L);
     }
 }

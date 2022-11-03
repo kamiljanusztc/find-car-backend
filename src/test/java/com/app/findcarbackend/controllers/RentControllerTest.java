@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -78,5 +79,15 @@ class RentControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cost", Matchers.is(800.00)));
+    }
+
+    @Test
+    void shouldDeleteRentById() {
+        List<Rent> rentList = List.of(new Rent(1L, LocalDate.of(2022, 05, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00, true, new Client(), new Car()));
+        when(rentService.getAllRents()).thenReturn(rentList);
+
+        rentService.deleteRent(1L);
+
+        verify(rentService).deleteRent(1L);
     }
 }
