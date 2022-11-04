@@ -3,6 +3,7 @@ package com.app.findcarbackend.controllers;
 import com.app.findcarbackend.domain.*;
 import com.app.findcarbackend.services.RentService;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +83,19 @@ class RentControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cost", Matchers.is(800.00)));
     }
 
+    @Test
+    public void shouldCreateRent() {
+        //Given
+        Rent rent = new Rent(1L, LocalDate.of(2022, 05, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00, true, new Client(), new Car());
+
+        when(rentService.createRent(rent)).thenReturn(rent);
+
+        List<Rent> rentList = new ArrayList<>();
+        rentList.add(rentService.createRent(rent));
+
+        //Then
+        Assertions.assertEquals(1, rentList.size());
+    }
     @Test
     void shouldDeleteRentById() {
         List<Rent> rentList = List.of(new Rent(1L, LocalDate.of(2022, 05, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00, true, new Client(), new Car()));

@@ -19,9 +19,6 @@ public class CarService {
         return carRepository.findById(carId);
     }
 
-    public String getCarByModel(final String carModel) {
-        return carRepository.findAll().get(0).getModel();
-    }
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }

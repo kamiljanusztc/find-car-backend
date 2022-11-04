@@ -86,6 +86,15 @@ class CarControllerTest {
     }
 
     @Test
+    void shouldAddCar() {
+        Car car = new Car(1L, "Audi", 2022, "Manual", "Diesel", 4.4, "220 ps", CarStatus.FREE);
+        when(carService.addCar(car)).thenReturn(car);
+
+        carService.addCar(car);
+
+        verify(carService).addCar(car);
+    }
+    @Test
     void shouldDeleteCarById() {
         List<Car> carList = List.of(new Car(1L, "Audi", 2022, "Manual", "Diesel", 4.4, "220 ps", CarStatus.FREE));
         when(carService.getAllCars()).thenReturn(carList);
