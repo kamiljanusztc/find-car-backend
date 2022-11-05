@@ -84,14 +84,14 @@ class RentControllerTest {
     }
 
     @Test
-    public void shouldCreateRent() {
+    public void shouldAddRent() {
         //Given
         Rent rent = new Rent(1L, LocalDate.of(2022, 05, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00, true, new Client(), new Car());
 
-        when(rentService.createRent(rent)).thenReturn(rent);
+        when(rentService.addRent(rent)).thenReturn(rent);
 
         List<Rent> rentList = new ArrayList<>();
-        rentList.add(rentService.createRent(rent));
+        rentList.add(rentService.addRent(rent));
 
         //Then
         Assertions.assertEquals(1, rentList.size());

@@ -1,10 +1,14 @@
 package com.app.findcarbackend.controllers;
+
+import com.app.findcarbackend.domain.Car;
 import com.app.findcarbackend.domain.Rent;
+import com.app.findcarbackend.services.CarService;
 import com.app.findcarbackend.services.RentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +19,8 @@ import java.util.Optional;
 public class RentController {
 
     private final RentService rentService;
+
+    private final CarService carService;
 
     @GetMapping(value = "{rentId}")
     public ResponseEntity<Optional> getClientById(@PathVariable Long rentId) {
@@ -30,6 +36,7 @@ public class RentController {
     }
 
     @PostMapping("/newRent")
+    @Transactional
     public ResponseEntity<Rent> createRent(@RequestBody Rent rent) {
         return ResponseEntity.ok(rentService.createRent(rent));
     }

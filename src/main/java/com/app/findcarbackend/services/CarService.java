@@ -19,6 +19,9 @@ public class CarService {
         return carRepository.findById(carId);
     }
 
+    public String getCarByModel(final String carModel) {
+        return carRepository.findAll().get(0).getModel();
+    }
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }
@@ -42,5 +45,9 @@ public class CarService {
     public boolean deleteCar(Long carId) {
         carRepository.deleteById(carId);
         return true;
+    }
+
+    public Car saveCar(Car car){
+        return carRepository.save(car);
     }
 }

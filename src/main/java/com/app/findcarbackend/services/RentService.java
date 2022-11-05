@@ -21,12 +21,10 @@ public class RentService {
     }
 
     public Rent createRent(Rent rent) {
-        rent.setDateStart(LocalDate.of(2022, 1, 13));
-        rent.setDateEnd(LocalDate.of(2022, 1, 15));
-        rent.setCost(600.00);
-        rent.setPaid(false);
-        rent.setClient(new Client());
-        rent.setCar(new Car());
+        return rentRepository.save(rent);
+    }
+
+    public Rent addRent(Rent rent) {
         return rentRepository.save(rent);
     }
 

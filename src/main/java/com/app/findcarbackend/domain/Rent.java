@@ -37,11 +37,11 @@ public class Rent {
     @Column(name = "PAYMENT")
     private boolean isPaid;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CLIENT_ID")
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CAR_ID")
     private Car car;
 }
