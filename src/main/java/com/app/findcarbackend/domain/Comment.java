@@ -22,6 +22,6 @@ public class Comment {
     @Column(name = "USER_NAME")
     private String userName;
 
-    @Column(name = "BODY")
-    private String body;
+    @Column(name = "CONTENT")
+    private String content;
 }

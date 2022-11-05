@@ -1,5 +1,6 @@
 package com.app.findcarbackend.services;
 
+import com.app.findcarbackend.domain.Car;
 import com.app.findcarbackend.domain.Client;
 import com.app.findcarbackend.domain.LoginStatus;
 import com.app.findcarbackend.repositories.ClientRepository;
@@ -43,5 +44,7 @@ public class ClientService {
         return true;
     }
 
-
+    public Client saveClient(Client client){
+        return clientRepository.save(client);
+    }
 }

@@ -93,4 +93,18 @@ class CarServiceTest {
         //Then
         Assertions.assertFalse(isExist);
     }
+
+    @Test
+    public void shouldCarSave() {
+        //Given
+        Car car1 = new Car(1L, "Saab", 2011, "Manual", "Petrol", 4.4, "245 ps", CarStatus.FREE);
+
+        //When
+        when(carService.saveCar(car1)).thenReturn(car1);
+
+        carService.saveCar(car1);
+
+        //Then
+        Assertions.assertEquals(car1.getModel(), "Saab");
+    }
 }

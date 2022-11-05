@@ -95,4 +95,18 @@ class RentServiceTest {
         //Then
         Assertions.assertFalse(isExist);
     }
+
+    @Test
+    public void shouldRentSave() {
+        //Given
+        Rent rent = new Rent(1L, LocalDate.of(2022, 05, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00, true, new Client(), new Car());
+
+        //When
+        when(rentService.saveRent(rent)).thenReturn(rent);
+
+        rentService.saveRent(rent);
+
+        //Then
+        Assertions.assertEquals(rent.getCost(), 800.00);
+    }
 }

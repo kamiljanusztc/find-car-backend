@@ -72,7 +72,6 @@ class ClientServiceTest {
         Client client = new Client(1L, "John", "Doe", "j_do", "j.doe@doe.com", "000000000", LoginStatus.LOGGED);
 
         //When
-        long clientId = client.getId();
         when(clientService.updateClient(client)).thenReturn(client);
 
         clientService.updateClient(client).setName("Mike");
@@ -92,5 +91,19 @@ class ClientServiceTest {
 
         //Then
         Assertions.assertFalse(isExist);
+    }
+
+    @Test
+    public void shouldClientSave() {
+        //Given
+        Client client = new Client(1L, "John", "Doe", "j_do", "j.doe@doe.com", "000000000", LoginStatus.LOGGED);
+
+        //When
+        when(clientService.saveClient(client)).thenReturn(client);
+
+        clientService.saveClient(client);
+
+        //Then
+        Assertions.assertEquals(client.getName(), "John");
     }
 }
