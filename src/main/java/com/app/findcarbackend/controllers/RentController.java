@@ -1,6 +1,5 @@
 package com.app.findcarbackend.controllers;
 
-import com.app.findcarbackend.domain.Car;
 import com.app.findcarbackend.domain.Rent;
 import com.app.findcarbackend.services.CarService;
 import com.app.findcarbackend.services.RentService;

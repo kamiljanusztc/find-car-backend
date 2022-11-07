@@ -2,6 +2,7 @@ package com.app.findcarbackend.controllers;
 
 import com.app.findcarbackend.domain.*;
 import com.app.findcarbackend.services.RentService;
+import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,24 @@ class RentControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].cost", Matchers.is(800.00)));
+    }
+
+    @Test
+    void shouldUpdatedRent() throws Exception {
+        Rent rent = new Rent(1L, LocalDate.of(2022, 05, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00, true, new Client(), new Car());
+        Rent rentUpdated = new Rent(1L, LocalDate.of(2022, 06, 01), LocalDate.of(2022, 05, 02), RentStatus.IN_PROGRESS, 800.00, true, new Client(), new Car());
+
+
+        Gson gson = new Gson();
+        String json = gson.toJson(rent);
+        when(rentService.updateRent(rent)).thenReturn(rentUpdated);
+
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/api/v1/rents/updateRent")
+                        .contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(MockMvcResultMatchers.status().is(200)); // or isOk()
     }
 
     @Test

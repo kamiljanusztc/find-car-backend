@@ -3,6 +3,7 @@ package com.app.findcarbackend.controllers;
 import com.app.findcarbackend.domain.Car;
 import com.app.findcarbackend.domain.CarStatus;
 import com.app.findcarbackend.services.CarService;
+import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -104,4 +105,31 @@ class CarControllerTest {
 
         verify(carService).deleteCar(1L);
     }
+
+    @Test
+    void shouldUpdatedCarById() {
+        Car testCar = new Car(1L, "Audi", 2022, "Automatic", "Diesel", 4.4, "220 ps", CarStatus.FREE);
+        when(carService.updateCar(testCar)).thenReturn(testCar);
+        carService.updateCar(testCar);
+        verify(carService).updateCar(testCar);
+    }
+
+    @Test
+    void shouldUpdatedCar() throws Exception {
+        Car testCar = new Car(1L, "Audi", 2022, "Automatic", "Diesel", 4.4, "220 ps", CarStatus.FREE);
+        Car testCarUpdated = new Car(1L, "Audi", 2022, "Manual", "Diesel", 4.4, "220 ps", CarStatus.FREE);
+        //Given
+        Gson gson = new Gson();
+        String json = gson.toJson(testCarUpdated);
+        when(carService.updateCar(testCar)).thenReturn(testCarUpdated);
+
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/api/v1/cars/updateCar")
+                        .contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(MockMvcResultMatchers.status().is(200)); // or isOk()
+    }
+
+
 }

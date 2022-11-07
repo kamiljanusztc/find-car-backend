@@ -2,6 +2,7 @@ package com.app.findcarbackend.controllers;
 
 import com.app.findcarbackend.domain.*;
 import com.app.findcarbackend.services.ClientService;
+import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -86,12 +87,27 @@ class ClientControllerTest {
     }
 
     @Test
+    void shouldUpdatedCar() throws Exception {
+        Client client = new Client(1L, "John@", "Doe2", "j_do", "j.doe@doe.com", "000000000", LoginStatus.LOGGED);
+        Client clientUpdated = new Client(1L, "John@", "Doe2", "j_do", "j.doe@doe.com", "000000000", LoginStatus.LOGGED);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(clientUpdated);
+        when(clientService.updateClient(client)).thenReturn(clientUpdated);
+
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/api/v1/clients/updateClient")
+                        .contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(MockMvcResultMatchers.status().is(200)); // or isOk()
+    }
+
+    @Test
     void shouldCreateClient() {
         Client client = new Client(1L, "John", "Doe", "j_do", "j.doe@doe.com", "000000000", LoginStatus.LOGGED);
         when(clientService.createClient(client)).thenReturn(client);
-
         clientService.createClient(client);
-
         verify(clientService).createClient(client);
     }
 

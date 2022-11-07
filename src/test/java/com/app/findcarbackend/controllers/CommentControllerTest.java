@@ -1,9 +1,8 @@
 package com.app.findcarbackend.controllers;
 
-import com.app.findcarbackend.domain.Car;
-import com.app.findcarbackend.domain.CarStatus;
-import com.app.findcarbackend.domain.Comment;
+import com.app.findcarbackend.domain.*;
 import com.app.findcarbackend.services.CommentService;
+import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +82,23 @@ class CommentControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userName", Matchers.is("Joe Doe")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.content", Matchers.is("I am super excited! Professional company!")));
+    }
+
+    @Test
+    void shouldUpdatedComment() throws Exception {
+        Comment comment = new Comment(1L, "Joe Doe", "I am super excited! Professional company!");
+        Comment commentUpdated = new Comment(1L, "Joe Doe", "I am super excited! Professional company!");
+
+        Gson gson = new Gson();
+        String json = gson.toJson(comment);
+        when(commentService.updateComment(comment)).thenReturn(commentUpdated);
+
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/api/v1/comments/updateComment")
+                        .contentType(MediaType.APPLICATION_JSON).content(json))
+                .andExpect(MockMvcResultMatchers.status().is(200)); // or isOk()
     }
 
     @Test
